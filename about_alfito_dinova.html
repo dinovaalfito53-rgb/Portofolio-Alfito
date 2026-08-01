@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | ASSO × Ruang.Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg:        #0D1117;
+            --surface:   #161B22;
+            --surface2:  #1C2128;
+            --border:    #21262D;
+            --border2:   #30363D;
+            --green:     #00FF41;
+            --green-glow: rgba(0, 255, 65, 0.12);
+            --green-glow-strong: rgba(0, 255, 65, 0.3);
+            --blue:      #58A6FF;
+            --text:      #C9D1D9;
+            --text-dim:  #8B949E;
+            --text-faint:#484F58;
+            --white:     #F0F6FC;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'DM Sans', sans-serif;
+            --radius: 4px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; min-height: 100vh; }
+
+        /* Cursor */
+        @media (hover: hover) and (pointer: fine) {
+            body { cursor: none; }
+            .cursor-dot { width:6px; height:6px; background:var(--green); border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); box-shadow:0 0 10px var(--green),0 0 20px var(--green-glow-strong); transition:width .15s,height .15s,background .15s; }
+            .cursor-ring { width:28px; height:28px; border:1px solid rgba(0,255,65,.35); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .2s ease,height .2s ease,border-color .2s; }
+            body.cursor-link .cursor-dot { width:12px; height:12px; background:var(--blue); box-shadow:0 0 14px var(--blue); }
+            body.cursor-link .cursor-ring { width:44px; height:44px; border-color:var(--blue); }
+        }
+
+        /* Nav */
+        .scroll-bar { position:fixed; top:0; left:0; height:2px; z-index:9999; background:linear-gradient(to right,var(--green),var(--blue)); box-shadow:0 0 8px var(--green); transform-origin:left; transform:scaleX(0); transition:transform .1s linear; }
+        .nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-items:center; justify-content:space-between; padding:0 60px; height:64px; background:rgba(13,17,23,.92); backdrop-filter:blur(16px) saturate(180%); border-bottom:1px solid var(--border); }
+        .nav-logo { font-family:var(--mono); font-weight:700; font-size:.95rem; letter-spacing:.2em; text-decoration:none; display:flex; align-items:center; gap:10px; color:inherit; }
+        .nav-logo .logo-bracket { color:var(--green); }
+        .nav-logo .logo-name { color:var(--white); }
+        .nav-logo .logo-tag { color:var(--text-dim); font-weight:400; font-size:.7rem; }
+        .nav-links { display:flex; gap:8px; list-style:none; }
+        .nav-links a { font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); text-decoration:none; padding:8px 14px; border-radius:var(--radius); transition:color var(--transition),background var(--transition); position:relative; }
+        .nav-links a:hover, .nav-links a.active { color:var(--green); background:var(--green-glow); }
+        .nav-links a.active::after { content:''; position:absolute; bottom:-1px; left:14px; right:14px; height:1px; background:var(--green); box-shadow:0 0 8px var(--green); }
+        .nav-cta { font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--bg); background:var(--green); border:none; padding:9px 20px; text-decoration:none; clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%); transition:all var(--transition); font-weight:600; }
+        .nav-cta:hover { background:#44ff6e; box-shadow:0 0 24px var(--green-glow-strong); }
+        .nav-link-external { font-family:var(--mono); font-size:.7rem; color:var(--text-dim); text-decoration:none; margin-left:8px; transition:color var(--transition); }
+        .nav-link-external:hover { color:var(--green); }
+        .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; padding:4px; }
+        .nav-hamburger span { display:block; width:22px; height:1.5px; background:var(--text-dim); transition:all .3s; }
+
+        .page-wrap { padding-top:64px; }
+        .page-hero { padding:80px 60px 60px; border-bottom:1px solid var(--border); background:linear-gradient(180deg,rgba(0,255,65,.02) 0%,transparent 100%); position:relative; overflow:hidden; }
+        .page-hero-breadcrumb { font-family:var(--mono); font-size:.65rem; color:var(--text-faint); margin-bottom:20px; letter-spacing:.1em; position:relative; z-index:1; }
+        .page-hero-breadcrumb a { color:var(--text-dim); text-decoration:none; }
+        .page-hero-breadcrumb span { color:var(--green); }
+        .page-hero-title { font-family:var(--mono); font-size:clamp(2rem,4vw,3.2rem); font-weight:700; color:var(--white); line-height:1.1; position:relative; z-index:1; }
+        .page-hero-sub { font-size:.95rem; color:var(--text-dim); line-height:1.75; max-width:600px; margin-top:16px; font-weight:300; position:relative; z-index:1; }
+        
+        .section { padding:80px 60px; position:relative; }
+        .about-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:60px; align-items:start; }
+        
+        /* Typography Content */
+        .about-manifesto { font-size:.95rem; line-height:1.9; color:var(--text-dim); }
+        .about-manifesto strong { color:var(--white); font-weight:500; }
+        .about-manifesto .highlight { color:var(--green); font-family:var(--mono); font-weight:600; }
+        .section-eyebrow { font-family:var(--mono); font-size:.62rem; letter-spacing:.25em; text-transform:uppercase; color:var(--green); margin-bottom:24px; display:flex; align-items:center; gap:10px; }
+        .section-eyebrow::before { content:'//'; opacity:.6; }
+        .section-eyebrow::after { content:''; flex:1; max-width:60px; height:1px; background:linear-gradient(to right,var(--green),transparent); }
+
+        .about-quote-block { margin:40px 0; padding:28px 32px; border-left:2px solid var(--green); background:var(--green-glow); position:relative; }
+        .about-quote-block::before { content:'"'; position:absolute; top:-10px; left:20px; font-size:4rem; color:var(--green); opacity:.15; font-family:serif; line-height:1; }
+        .about-quote-text { font-family:var(--mono); font-size:.82rem; color:var(--text); line-height:1.7; font-style:italic; }
+        .about-quote-cite { display:block; margin-top:10px; font-family:var(--mono); font-size:.62rem; letter-spacing:.15em; color:var(--green); opacity:.6; font-style:normal; }
+
+        /* Timeline / Experience */
+        .timeline { position:relative; padding-left:24px; margin-top:8px; }
+        .timeline::before { content:''; position:absolute; left:0; top:8px; bottom:8px; width:1px; background:linear-gradient(to bottom, var(--green), transparent); }
+        .tl-item { position:relative; padding:0 0 32px 24px; }
+        .tl-item::before { content:''; position:absolute; left:-4px; top:6px; width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); }
+        .tl-year { font-family:var(--mono); font-size:.6rem; letter-spacing:.15em; color:var(--green); opacity:.6; margin-bottom:6px; }
+        .tl-title { font-family:var(--mono); font-size:.85rem; font-weight:600; color:var(--white); margin-bottom:4px; }
+        .tl-desc { font-size:.8rem; color:var(--text-dim); line-height:1.6; }
+
+        /* Right Column Blocks */
+        .about-sidebar { display:flex; flex-direction:column; gap:24px; }
+        .sidebar-block { background:var(--surface); border:1px solid var(--border); padding:28px 28px; position:relative; overflow:hidden; }
+        .sidebar-block::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,var(--green),transparent); }
+        
+        .skill-bars { display:flex; flex-direction:column; gap:14px; }
+        .skill-bar-header { display:flex; justify-content:space-between; margin-bottom:6px; }
+        .skill-name { font-family:var(--mono); font-size:.72rem; color:var(--text); }
+        .skill-pct { font-family:var(--mono); font-size:.68rem; color:var(--green); }
+        .skill-track { height:3px; background:var(--border); position:relative; overflow:hidden; }
+        .skill-fill { height:100%; background:linear-gradient(to right,var(--green),var(--blue)); transform:scaleX(0); transform-origin:left; transition:transform 1s ease; }
+        .skill-fill.animated { transform:scaleX(1); }
+
+        .ascii-block { background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--green); padding:24px 28px; font-family:var(--mono); font-size:.68rem; color:var(--text-faint); line-height:1.5; overflow-x:auto; }
+        .ascii-block .a-green { color:var(--green); }
+        .ascii-block .a-blue { color:var(--blue); }
+
+        .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s ease,transform .65s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+
+        /* Footer */
+        .footer { background:var(--bg); padding:48px 60px; border-top:1px solid var(--border); }
+        .footer-divider { height:1px; background:linear-gradient(to right,transparent,var(--border),transparent); margin-bottom:48px; }
+        .footer-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px; }
+        .footer-logo { font-family:var(--mono); font-size:.9rem; font-weight:700; letter-spacing:.2em; color:var(--text); }
+        .footer-logo .fl-bracket { color:var(--green); }
+        .footer-copy { font-family:var(--mono); font-size:.62rem; color:var(--text-faint); letter-spacing:.08em; }
+        .footer-links { display:flex; gap:24px; list-style:none; }
+        .footer-links a { font-family:var(--mono); font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); text-decoration:none; transition:color var(--transition); }
+        .footer-links a:hover { color:var(--green); }
+
+        @media(max-width:900px){
+            .nav { padding:0 20px; height:56px; }
+            .nav-links, .nav-cta, .nav-link-external { display:none; }
+            .nav-hamburger { display:flex; }
+            .page-hero, .section { padding:60px 20px; }
+            .about-grid { grid-template-columns:1fr; gap:40px; }
+            .footer { padding:40px 20px; }
+            .footer-inner { flex-direction:column; align-items:flex-start; gap:16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+<div class="scroll-bar"></div>
+
+<nav class="nav">
+    <a href="index.html" class="nav-logo">
+        <span class="logo-bracket">[</span><span class="logo-name">ASSO</span><span class="logo-bracket">]</span><span class="logo-tag">× Ruang.Trading</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="portofolio-sertifikat.html">Portofolio</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+    </ul>
+    <a href="https://wa.me/62895327188128" target="_blank" class="nav-cta">Hubungi WA</a>
+    <a href="https://asso-tech.great-site.net" target="_blank" rel="noopener" class="nav-link-external">ASSO.dev ↗</a>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-wrap">
+    <section class="page-hero">
+        <div class="page-hero-breadcrumb"><a href="index.html">Home</a> / <span>About</span></div>
+        <h1 class="page-hero-title">Profil / <span style="color:var(--green);">About</span></h1>
+        <p class="page-hero-sub">Perpaduan antara disiplin analisis pasar dan obsesi pada efisiensi sistem.</p>
+    </section>
+
+    <section class="section">
+        <div class="about-grid">
+            
+            <!-- Kolom Kiri: Cerita & Pengalaman -->
+            <div>
+                <div class="section-eyebrow reveal">Summary</div>
+                <div class="about-manifesto reveal">
+                    <p>Trading bukan sekadar menebak arah pasar, melainkan <strong>probabilitas matematika dan eksekusi sistem yang tanpa emosi.</strong> Sebagai analis pasar independen dengan fokus pada instrumen Emas (XAUUSD) & Major Pairs, saya mengandalkan data, struktur pasar, dan rasio.</p>
+                    <p style="margin-top:16px;">Saya percaya pada <span class="highlight">Risk Management yang ketat</span> guna menjaga konsistensi kurva pertumbuhan akun (equity curve). Pendekatan ini saya kombinasikan dengan eksplorasi mendalam pada efisiensi sistem, termasuk modifikasi tingkat sistem (Linux/Android) untuk memaksimalkan pemrosesan data real-time.</p>
+                </div>
+
+                <div class="about-quote-block reveal">
+                    <p class="about-quote-text">"Amateur traders focus on how much money they can make. Professional traders focus on how much money they could lose."</p>
+                    <span class="about-quote-cite">— Market Principle</span>
+                </div>
+
+                <div class="section-eyebrow reveal" style="margin-top:56px;">Experience & Timeline</div>
+                
+                <div class="timeline reveal">
+                    <div class="tl-item">
+                        <div class="tl-year" style="color:var(--green);">2026 - Present</div>
+                        <div class="tl-title" style="color:var(--green);">Prop Firm Trader / Analyst</div>
+                        <div class="tl-desc">Secara aktif mengelola risiko pada akun prop firm berjalan dengan total evaluasi terstruktur: Blue Guardian ($5k Instant Starter), TX3Funding ($5k 2-Step), dan FundedHero ($1k 2-Step).</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-year">2025 - 2026</div>
+                        <div class="tl-title">Trader — Independent</div>
+                        <div class="tl-desc">Berhasil menembus fase evaluasi pada platform prop firm terkemuka seperti SureLeverage Funding, Atlasfunded, dan AquaFunded.</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-year">2025 - Present</div>
+                        <div class="tl-title">System Researcher & Optimizer</div>
+                        <div class="tl-desc">Membangun lingkungan kerja Kali Linux dalam arsitektur dual-boot. Melakukan modifikasi OS desktop & mobile guna mengeliminasi bloatware dan memaksimalkan performa data.</div>
+                    </div>
+                    <div class="tl-item" style="padding-bottom:0;">
+                        <div class="tl-year">2027 (Expected)</div>
+                        <div class="tl-title">SMA NU Palembang</div>
+                        <div class="tl-desc">Pelajar aktif Jurusan Ilmu Pengetahuan Sosial (IPS). Membagi waktu antara akademik dan eksplorasi pasar finansial.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kolom Kanan: Skill & ID Card -->
+            <div class="about-sidebar">
+                
+                <div class="ascii-block reveal">
+                    <div>╔══════════════════════════════╗</div>
+                    <div>║  <span class="a-green">SYSTEM OPERATOR ID</span>          ║</div>
+                    <div>╠══════════════════════════════╣</div>
+                    <div>║  NAME   : <span class="a-blue">Alfito Dinova</span>       ║</div>
+                    <div>║  ROLE   : <span class="a-green">Jr. Trader/Analyst</span>  ║</div>
+                    <div>║  SYSTEM : Kali Linux / Win     ║</div>
+                    <div>║  ASSETS : XAUUSD, Major Pairs  ║</div>
+                    <div>║  LOGIC  : Price Action, SMC    ║</div>
+                    <div>║  STATUS : <span class="a-green">ACTIVE ■ ONLINE</span>     ║</div>
+                    <div>╚══════════════════════════════╝</div>
+                </div>
+
+                <div class="sidebar-block reveal">
+                    <div style="font-family:var(--mono); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-faint); margin-bottom:20px;">Proficiency</div>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-bar-header"><span class="skill-name">Risk Management (RR 1:2)</span><span class="skill-pct">95%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="--w:0.95"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-header"><span class="skill-name">Market Structure (BOS/CHOCH)</span><span class="skill-pct">90%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="--w:0.90"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-header"><span class="skill-name">MT4/MT5 & TradingView</span><span class="skill-pct">85%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="--w:0.85"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-header"><span class="skill-name">Fundamental News (CPI/NFP)</span><span class="skill-pct">80%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="--w:0.80"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-header"><span class="skill-name">Linux / OS Optimization</span><span class="skill-pct">85%</span></div>
+                            <div class="skill-track"><div class="skill-fill" style="--w:0.85"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-divider"></div>
+        <div class="footer-inner">
+            <div class="footer-logo"><span class="fl-bracket">[</span>ASSO<span class="fl-bracket">]</span> × Ruang.Trading</div>
+            <div class="footer-copy">© 2026 Alfito Dinova · All systems nominal.</div>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portofolio-sertifikat.html">Portofolio</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="https://asso-tech.great-site.net" target="_blank" rel="noopener">ASSO.dev</a></li>
+            </ul>
+        </div>
+    </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Cursor
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        if (dot && ring && window.matchMedia("(pointer: fine)").matches) {
+            let mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+            (function loop() {
+                rx += (mx - rx) * .13; ry += (my - ry) * .13;
+                dot.style.cssText = `left:${mx}px;top:${my}px`;
+                ring.style.cssText = `left:${rx}px;top:${ry}px`;
+                requestAnimationFrame(loop);
+            })();
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-link'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-link'));
+            });
+        }
+
+        // Scroll Bar
+        const bar = document.querySelector('.scroll-bar');
+        window.addEventListener('scroll', () => {
+            const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            if(bar) bar.style.transform = `scaleX(${pct})`;
+        }, { passive: true });
+
+        // Scroll Reveal
+        const revealEls = document.querySelectorAll('.reveal');
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        revealEls.forEach(el => obs.observe(el));
+
+        // Skill Bars Animation
+        const fills = document.querySelectorAll('.skill-fill');
+        const skillObs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting) { 
+                e.target.classList.add('animated'); 
+                skillObs.unobserve(e.target); 
+            } });
+        }, { threshold: 0.3 });
+        fills.forEach(f => {
+            f.style.transform = `scaleX(${f.style.getPropertyValue('--w') || 0})`; // Fallback value set
+            skillObs.observe(f);
+        });
+
+        // Hamburger Menu
+        const ham = document.querySelector('.nav-hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        if (ham && navLinks) {
+            ham.addEventListener('click', () => {
+                const open = navLinks.style.display === 'flex';
+                navLinks.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:rgba(13,17,23,.97);border-bottom:1px solid var(--border);padding:16px 24px;gap:4px;z-index:799;';
+            });
+        }
+    });
+</script>
+</body>
+</html>

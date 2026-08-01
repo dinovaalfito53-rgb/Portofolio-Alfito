@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfito Dinova | Trading & System Optimization</title>
+    <meta name="description" content="Portofolio Alfito Dinova — Independent Trader & System Optimizer.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg:        #0D1117;
+            --surface:   #161B22;
+            --surface2:  #1C2128;
+            --border:    #21262D;
+            --border2:   #30363D;
+            --green:     #00FF41;
+            --green-dim: #00CC33;
+            --green-glow: rgba(0, 255, 65, 0.12);
+            --green-glow-strong: rgba(0, 255, 65, 0.3);
+            --blue:      #58A6FF;
+            --text:      #C9D1D9;
+            --text-dim:  #8B949E;
+            --text-faint:#484F58;
+            --white:     #F0F6FC;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'DM Sans', sans-serif;
+            --radius: 4px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            background: var(--bg); color: var(--text);
+            font-family: var(--sans); font-weight: 300;
+            overflow-x: hidden; min-height: 100vh;
+        }
+
+        /* Cursor */
+        @media (hover: hover) and (pointer: fine) {
+            body { cursor: none; }
+            .cursor-dot { width:6px; height:6px; background:var(--green); border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); box-shadow:0 0 10px var(--green),0 0 20px var(--green-glow-strong); transition:width .15s,height .15s,background .15s; }
+            .cursor-ring { width:28px; height:28px; border:1px solid rgba(0,255,65,.35); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .2s ease,height .2s ease,border-color .2s; }
+            body.cursor-link .cursor-dot { width:12px; height:12px; background:var(--blue); box-shadow:0 0 14px var(--blue); }
+            body.cursor-link .cursor-ring { width:44px; height:44px; border-color:var(--blue); }
+            body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:9000; background: repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px); }
+        }
+
+        /* Nav & Shared */
+        .scroll-bar { position:fixed; top:0; left:0; height:2px; z-index:9999; background:linear-gradient(to right,var(--green),var(--blue)); box-shadow:0 0 8px var(--green); transform-origin:left; transform:scaleX(0); transition:transform .1s linear; }
+        .nav { position:fixed; top:0; left:0; right:0; z-index:800; display:flex; align-items:center; justify-content:space-between; padding:0 60px; height:64px; background:rgba(13,17,23,.92); backdrop-filter:blur(16px) saturate(180%); border-bottom:1px solid var(--border); }
+        .nav-logo { font-family:var(--mono); font-weight:700; font-size:.95rem; letter-spacing:.2em; text-decoration:none; display:flex; align-items:center; gap:10px; color:inherit; }
+        .nav-logo .logo-bracket { color:var(--green); }
+        .nav-logo .logo-name { color:var(--white); }
+        .nav-logo .logo-tag { color:var(--text-dim); font-weight:400; font-size:.7rem; }
+        .nav-links { display:flex; gap:8px; list-style:none; }
+        .nav-links a { font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); text-decoration:none; padding:8px 14px; border-radius:var(--radius); transition:color var(--transition),background var(--transition); position:relative; }
+        .nav-links a:hover, .nav-links a.active { color:var(--green); background:var(--green-glow); }
+        .nav-links a.active::after { content:''; position:absolute; bottom:-1px; left:14px; right:14px; height:1px; background:var(--green); box-shadow:0 0 8px var(--green); }
+        .nav-cta { font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--bg); background:var(--green); border:none; padding:9px 20px; text-decoration:none; clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%); transition:all var(--transition); font-weight:600; }
+        .nav-cta:hover { background:#44ff6e; box-shadow:0 0 24px var(--green-glow-strong); }
+        .nav-link-external { font-family:var(--mono); font-size:.7rem; color:var(--text-dim); text-decoration:none; margin-left:8px; transition:color var(--transition); }
+        .nav-link-external:hover { color:var(--green); }
+        .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; padding:4px; }
+        .nav-hamburger span { display:block; width:22px; height:1.5px; background:var(--text-dim); transition:all .3s; }
+
+        .page-wrap { padding-top:64px; }
+        .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:80px 60px; position:relative; overflow:hidden; }
+        .hero-bg-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,255,65,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,.03) 1px,transparent 1px); background-size:40px 40px; animation:grid-breathe 8s ease-in-out infinite; }
+        @keyframes grid-breathe { 0%,100%{opacity:.5} 50%{opacity:1} }
+        .hero-bg-glow { position:absolute; top:-20%; right:-10%; width:600px; height:600px; background:radial-gradient(circle,rgba(0,255,65,.06) 0%,transparent 65%); pointer-events:none; }
+        
+        .hero-layout { display:grid; grid-template-columns:1fr 380px; gap:60px; align-items:center; position:relative; z-index:1; }
+        .hero-name-badge { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--text-dim); border:1px solid var(--border); padding:6px 14px; margin-bottom:32px; background:rgba(255,255,255,.02); }
+        .hero-name-badge .badge-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse-dot 2s ease-in-out infinite; }
+        @keyframes pulse-dot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.6} }
+        .hero-headline { font-family:var(--mono); font-weight:700; font-size:clamp(2.2rem,5vw,4rem); line-height:1.1; color:var(--white); max-width:800px; }
+        .hero-headline .fixed { display:block; }
+        .hero-headline .rotating-wrap { display:inline-flex; align-items:center; gap:12px; color:var(--green); overflow:hidden; height:1.2em; }
+        .hero-sub { color:var(--text-dim); font-size:.95rem; line-height:1.8; max-width:520px; margin-top:24px; font-weight:300; }
+        .hero-sub strong { color:var(--text); font-weight:500; }
+        .hero-cta-group { display:flex; gap:14px; margin-top:44px; flex-wrap:wrap; }
+        
+        .btn { font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; font-weight:600; text-decoration:none; padding:13px 28px; transition:all var(--transition); display:inline-flex; align-items:center; gap:8px; }
+        .btn-green { color:var(--bg); background:var(--green); clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%); }
+        .btn-green:hover { background:#44ff6e; box-shadow:0 0 32px var(--green-glow-strong); transform:translateY(-2px); }
+        .btn-outline { color:var(--green); border:1px solid rgba(0,255,65,.3); background:transparent; clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%); }
+        .btn-outline:hover { border-color:var(--green); background:var(--green-glow); box-shadow:0 0 20px var(--green-glow); transform:translateY(-2px); }
+
+        .hero-stats { display:flex; gap:48px; margin-top:64px; padding-top:40px; border-top:1px solid var(--border); }
+        .hero-stat-val { font-family:var(--mono); font-size:1.6rem; font-weight:700; color:var(--green); display:block; }
+        .hero-stat-label { font-size:.78rem; color:var(--text-dim); margin-top:4px; display:block; }
+
+        /* Terminal Widget */
+        .terminal { background:var(--surface); border:1px solid var(--border); border-top:2px solid var(--green); font-family:var(--mono); font-size:.72rem; overflow:hidden; }
+        .terminal-titlebar { display:flex; align-items:center; gap:8px; padding:10px 16px; background:var(--surface2); border-bottom:1px solid var(--border); }
+        .t-dot { width:10px; height:10px; border-radius:50%; }
+        .t-red { background:#FF5F56; } .t-yellow { background:#FFBD2E; } .t-green-dot { background:#27C93F; }
+        .terminal-title-text { color:var(--text-dim); font-size:.65rem; margin-left:auto; letter-spacing:.1em; }
+        .terminal-body { padding:16px 20px; }
+        .t-line { display:flex; gap:8px; margin-bottom:6px; line-height:1.6; }
+        .t-prompt { color:var(--green); flex-shrink:0; }
+        .t-cmd { color:var(--text); }
+        .t-output { color:var(--text-dim); margin-left:16px; }
+        .t-val-green { color:var(--green); }
+        .t-val-blue { color:var(--blue); }
+        .t-cursor { display:inline-block; width:7px; height:13px; background:var(--green); animation:blink-cursor 1s steps(1) infinite; vertical-align:middle; }
+        @keyframes blink-cursor { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+        /* Strip & Sections */
+        .why-strip { background:var(--surface2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:60px; display:flex; gap:60px; align-items:center; flex-wrap:wrap; }
+        .why-stat { text-align:center; flex:1; min-width:140px; }
+        .why-stat-val { font-family:var(--mono); font-size:1.6rem; font-weight:700; color:var(--green); display:block; }
+        .why-stat-label { font-size:.8rem; color:var(--text-dim); margin-top:6px; display:block; line-height:1.4; }
+        .why-divider { width:1px; background:var(--border); align-self:stretch; }
+
+        .section { padding:100px 60px; position:relative; }
+        .usp-section { background:var(--surface); }
+        .usp-header { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:end; margin-bottom:60px; }
+        .section-eyebrow { font-family:var(--mono); font-size:.62rem; letter-spacing:.25em; text-transform:uppercase; color:var(--green); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+        .section-eyebrow::before { content:'//'; opacity:.6; }
+        .section-eyebrow::after { content:''; flex:1; max-width:60px; height:1px; background:linear-gradient(to right,var(--green),transparent); }
+        .section-title { font-family:var(--mono); font-size:clamp(1.6rem,3vw,2.4rem); font-weight:700; color:var(--white); line-height:1.15; margin-bottom:12px; }
+        .section-sub { color:var(--text-dim); font-size:.95rem; line-height:1.75; max-width:480px; font-weight:300; }
+
+        /* USP Grid */
+        .usp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:60px; }
+        .usp-card { background:var(--surface); padding:40px 32px; border:1px solid transparent; position:relative; overflow:hidden; transition:transform var(--transition),box-shadow var(--transition); }
+        .usp-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(to right,var(--green),var(--blue)); transform:scaleX(0); transform-origin:left; transition:transform .4s ease; }
+        .usp-card:hover { transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.4); border-color:rgba(0,255,65,.15); }
+        .usp-card:hover::before { transform:scaleX(1); }
+        .usp-icon { font-size:1.8rem; margin-bottom:20px; }
+        .usp-title { font-family:var(--mono); font-size:.9rem; font-weight:600; color:var(--white); margin-bottom:10px; }
+        .usp-desc { font-size:.85rem; color:var(--text-dim); line-height:1.7; }
+
+        /* Quote Banner & Footer */
+        .quote-banner { background:var(--bg); padding:80px 60px; text-align:center; border-bottom:1px solid var(--border); }
+        .quote-text { font-family:var(--mono); font-size:clamp(1rem,2vw,1.4rem); color:var(--text); line-height:1.6; max-width:700px; margin:0 auto; }
+        .quote-author { font-family:var(--mono); font-size:.65rem; color:var(--text-faint); letter-spacing:.2em; text-transform:uppercase; margin-top:20px; display:block; }
+        
+        .footer { background:var(--bg); padding:48px 60px; }
+        .footer-divider { height:1px; background:linear-gradient(to right,transparent,var(--border),transparent); margin-bottom:48px; }
+        .footer-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px; }
+        .footer-logo { font-family:var(--mono); font-size:.9rem; font-weight:700; letter-spacing:.2em; color:var(--text); }
+        .footer-logo .fl-bracket { color:var(--green); }
+        .footer-copy { font-family:var(--mono); font-size:.62rem; color:var(--text-faint); letter-spacing:.08em; }
+        .footer-links { display:flex; gap:24px; list-style:none; }
+        .footer-links a { font-family:var(--mono); font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); text-decoration:none; transition:color var(--transition); }
+        .footer-links a:hover { color:var(--green); }
+        
+        /* Reveal Animation */
+        .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s ease,transform .65s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .reveal-d1 { transition-delay:.1s; } .reveal-d2 { transition-delay:.2s; } .reveal-d3 { transition-delay:.3s; }
+
+        /* Responsive */
+        @media(max-width:900px){
+            .nav { padding:0 20px; height:56px; }
+            .nav-links, .nav-cta, .nav-link-external { display:none; }
+            .nav-hamburger { display:flex; }
+            .hero, .section { padding:60px 20px; }
+            .hero-layout, .usp-header { grid-template-columns:1fr; gap:20px; }
+            .hero-headline { font-size:2rem; }
+            .hero-stats { gap:20px; flex-wrap:wrap; }
+            .terminal-widget-hero { display:none; }
+            .why-strip { padding:30px 20px; gap:20px; }
+            .why-divider { display:none; }
+            .usp-grid { grid-template-columns:1fr; }
+            .footer { padding:40px 20px; }
+            .footer-inner { flex-direction:column; align-items:flex-start; gap:16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+<div class="scroll-bar"></div>
+
+<nav class="nav">
+    <a href="index.html" class="nav-logo">
+        <span class="logo-bracket">[</span><span class="logo-name">ASSO</span><span class="logo-bracket">]</span><span class="logo-tag">× Ruang.Trading</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="portofolio-sertifikat.html">Portofolio</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="https://wa.me/62895327188128" target="_blank" class="nav-cta">Hubungi WA</a>
+    <a href="https://asso-tech.great-site.net" target="_blank" rel="noopener" class="nav-link-external">ASSO.dev ↗</a>
+    <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-wrap">
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-bg-grid"></div>
+        <div class="hero-bg-glow"></div>
+
+        <div class="hero-layout">
+            <div class="hero-content">
+                <div class="hero-name-badge">
+                    <span class="badge-dot"></span>
+                    <span>Alfito Dinova — Junior Trader / Optimizer</span>
+                </div>
+                <h1 class="hero-headline">
+                    <span class="fixed">Spesialis dalam</span>
+                    <span class="rotating-wrap">
+                        <span class="rotating-text" id="rotator">Analisis Pasar.</span>
+                    </span>
+                </h1>
+                <p class="hero-sub">
+                    <strong>Disiplin Eksekusi & Efisiensi Sistem:</strong> Menggabungkan pendekatan probabilitas matematika (SMC & Price Action) dengan manajemen sistem IT tingkat lanjut untuk hasil yang konsisten dan tanpa hambatan.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="about.html" class="btn btn-green"><span>Profil Saya</span> →</a>
+                    <a href="portofolio-sertifikat.html" class="btn btn-outline"><span>Sertifikasi</span></a>
+                </div>
+                <div class="hero-stats">
+                    <div><span class="hero-stat-val">3</span><span class="hero-stat-label">Prop Firms</span></div>
+                    <div><span class="hero-stat-val">1:2</span><span class="hero-stat-label">Min RR Ratio</span></div>
+                    <div><span class="hero-stat-val">0</span><span class="hero-stat-label">OS Bloatware</span></div>
+                </div>
+            </div>
+
+            <!-- Terminal Widget -->
+            <div class="terminal-widget-hero">
+                <div class="terminal">
+                    <div class="terminal-titlebar">
+                        <span class="t-dot t-red"></span><span class="t-dot t-yellow"></span><span class="t-dot t-green-dot"></span>
+                        <span class="terminal-title-text">alfito@asso ~ status</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd">./check-profile</span></div>
+                        <div class="t-line"><span class="t-output">▶ ROLE</span><span class="t-val-green">Trader & Analyst</span></div>
+                        <div class="t-line"><span class="t-output">▶ MAIN_ASSET</span><span class="t-val-green">XAUUSD / Majors</span></div>
+                        <div class="t-line"><span class="t-output">▶ LOGIC</span><span class="t-val-blue">Price Action / SMC</span></div>
+                        <div class="t-line"><span class="t-output">▶ OS_SYSTEM</span><span class="t-val-green">Kali Linux (Dual)</span></div>
+                        <div class="t-line"><span class="t-output">▶ FUNDING</span><span class="t-val-green">BlueGuardian, TX3</span></div>
+                        <div class="t-line" style="margin-top:8px"><span class="t-prompt">$</span><span class="t-cmd"> </span><span class="t-cursor"></span></div>
+                    </div>
+                </div>
+                <div style="margin-top:16px; padding:16px 20px; background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--green);">
+                    <div style="font-family:var(--mono); font-size:.6rem; letter-spacing:.15em; color:var(--green); opacity:.7; margin-bottom:8px; text-transform:uppercase;">Core Philosophy</div>
+                    <div style="font-family:var(--mono); font-size:.75rem; color:var(--text-dim); line-height:1.6;">"Amateur traders focus on making money. Professionals focus on risk."</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY STRIP -->
+    <div class="why-strip">
+        <div class="why-stat reveal"><span class="why-stat-val">SMC</span><span class="why-stat-label">Smart Money<br>Concepts</span></div>
+        <div class="why-divider"></div>
+        <div class="why-stat reveal reveal-d1"><span class="why-stat-val">Risk</span><span class="why-stat-label">Strict 1:2<br>Management</span></div>
+        <div class="why-divider"></div>
+        <div class="why-stat reveal reveal-d2"><span class="why-stat-val">PropFirm</span><span class="why-stat-label">Funded Trader<br>Evaluations</span></div>
+        <div class="why-divider"></div>
+        <div class="why-stat reveal reveal-d3"><span class="why-stat-val">Linux</span><span class="why-stat-label">OS System<br>Optimization</span></div>
+    </div>
+
+    <!-- USP -->
+    <section class="section usp-section">
+        <div class="usp-header">
+            <div>
+                <div class="section-eyebrow reveal">Metodologi</div>
+                <h2 class="section-title reveal reveal-d1">Presisi Data.<br>Eksekusi Tanpa Emosi.</h2>
+            </div>
+            <p class="section-sub reveal reveal-d2">Pendekatan trading dan manajemen sistem saya didasarkan pada logika, perlindungan data, dan pengulangan proses yang konsisten.</p>
+        </div>
+        <div class="usp-grid">
+            <div class="usp-card reveal"><div class="usp-icon">🛡️</div><div class="usp-title">Strict Risk Management</div><div class="usp-desc">Selalu berpegang pada RR minimum 1:2. Menjaga kurva pertumbuhan akun (equity curve) tetap stabil tanpa drawdown ekstrem.</div></div>
+            <div class="usp-card reveal reveal-d1"><div class="usp-icon">📊</div><div class="usp-title">Structure Mapping</div><div class="usp-desc">Fokus analisis pada pergerakan harga murni, penentuan zona Supply/Demand, dan antisipasi manipulasi likuiditas pasar.</div></div>
+            <div class="usp-card reveal reveal-d2"><div class="usp-icon">⚡</div><div class="usp-title">System Efficiency</div><div class="usp-desc">Hardware dan OS yang dimodifikasi untuk kecepatan maksimal. Mengeliminasi bloatware agar platform trading berjalan tanpa lag.</div></div>
+        </div>
+    </section>
+
+    <!-- QUOTE BANNER -->
+    <div class="quote-banner">
+        <p class="quote-text reveal">"Trading bukan sekadar menebak arah pasar, melainkan <em>probabilitas matematika dan eksekusi sistem</em> yang konsisten."</p>
+        <div style="margin-top:40px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;" class="reveal reveal-d2">
+            <a href="about.html" class="btn btn-green">Lihat Pengalaman Detail →</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-divider"></div>
+        <div class="footer-inner">
+            <div class="footer-logo"><span class="fl-bracket">[</span>ASSO<span class="fl-bracket">]</span> × Ruang.Trading</div>
+            <div class="footer-copy">© 2026 Alfito Dinova · All systems nominal.</div>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portofolio-sertifikat.html">Portofolio</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="https://asso-tech.great-site.net" target="_blank" rel="noopener">ASSO.dev</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Cursor
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        if (dot && ring && window.matchMedia("(pointer: fine)").matches) {
+            let mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+            (function loop() {
+                rx += (mx - rx) * .13; ry += (my - ry) * .13;
+                dot.style.cssText = `left:${mx}px;top:${my}px`;
+                ring.style.cssText = `left:${rx}px;top:${ry}px`;
+                requestAnimationFrame(loop);
+            })();
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-link'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-link'));
+            });
+        }
+
+        // Scroll Bar
+        const bar = document.querySelector('.scroll-bar');
+        window.addEventListener('scroll', () => {
+            const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            if(bar) bar.style.transform = `scaleX(${pct})`;
+        }, { passive: true });
+
+        // Scroll Reveal
+        const revealEls = document.querySelectorAll('.reveal');
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        revealEls.forEach(el => obs.observe(el));
+
+        // Hamburger Menu
+        const ham = document.querySelector('.nav-hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        if (ham && navLinks) {
+            ham.addEventListener('click', () => {
+                const open = navLinks.style.display === 'flex';
+                navLinks.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:rgba(13,17,23,.97);border-bottom:1px solid var(--border);padding:16px 24px;gap:4px;z-index:799;';
+            });
+        }
+
+        // Rotator Hero Text
+        const words = ['Analisis Pasar.', 'Manajemen Risiko.', 'Efisiensi Sistem.'];
+        const rotator = document.getElementById('rotator');
+        if (rotator) {
+            let i = 0;
+            setInterval(() => {
+                rotator.style.opacity = '0';
+                rotator.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    i = (i + 1) % words.length;
+                    rotator.textContent = words[i];
+                    rotator.style.transition = 'opacity .4s ease, transform .4s ease';
+                    rotator.style.opacity = '1';
+                    rotator.style.transform = 'translateY(0)';
+                }, 400);
+            }, 3000);
+        }
+    });
+</script>
+</body>
+</html>
