@@ -70,39 +70,79 @@
         .page-hero-sub { font-size:.95rem; color:var(--text-dim); line-height:1.75; max-width:600px; margin-top:16px; font-weight:300; position:relative; z-index:1; }
         .section { padding:80px 60px; position:relative; }
 
-        .carousel-container {
-            overflow: hidden; user-select: none;
-            background: rgba(255,255,255,0.02); backdrop-filter: blur(5px);
-            padding: 20px 0; border-radius: 12px; border: 1px solid var(--border);
+        /* GRID PORTFOLIO (NEW STYLE) */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+            width: 100%;
         }
-        .carousel-track {
-            display: flex; gap: 30px; width: max-content;
-            padding-right: 30px;
-            animation: marqueeScroll 35s linear infinite;
-        }
-        @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .carousel-container:hover .carousel-track { animation-play-state: paused; }
 
         .portfolio-card {
-            flex-shrink: 0; width: 360px;
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 12px; overflow: hidden;
-            transition: border-color var(--transition), box-shadow var(--transition);
+            background: var(--surface); 
+            border: 1px solid var(--border);
+            border-radius: 12px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
         }
-        .portfolio-card:hover { border-color: rgba(0,255,65,.25); box-shadow: 0 16px 48px rgba(0,0,0,.4), 0 0 24px var(--green-glow); }
-        .portfolio-img { background: #1a1a1a; display: flex; align-items: center; justify-content: center; overflow: hidden; height: 210px; border-bottom:1px solid var(--border); }
-        .portfolio-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .portfolio-info { padding: 1.5rem; }
+        
+        .portfolio-card:hover { 
+            border-color: rgba(0,255,65,.25); 
+            box-shadow: 0 16px 48px rgba(0,0,0,.4), 0 0 24px var(--green-glow); 
+            transform: translateY(-6px);
+        }
+
+        .portfolio-img { 
+            background: #1a1a1a; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            height: 210px; 
+            border-bottom: 1px solid var(--border); 
+        }
+        
+        .portfolio-img img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-card:hover .portfolio-img img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-info { 
+            padding: 1.5rem; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
         .portfolio-info h3 { font-family: var(--mono); color: var(--green); font-size: 1.05rem; margin-bottom: 0.5rem; }
         .portfolio-info p { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1rem; line-height: 1.6; }
         
-        .cert-meta { display: flex; flex-direction: column; gap: 6px; padding-top: 12px; border-top: 1px dashed var(--border2); }
+        .cert-meta { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 6px; 
+            padding-top: 12px; 
+            border-top: 1px dashed var(--border2); 
+            margin-top: auto; /* Memastikan posisi selalu di bawah kartu */
+        }
         .cert-meta-row { display: flex; justify-content: space-between; align-items: center; }
         .cert-label { font-family: var(--mono); font-size: .65rem; color: var(--text-faint); text-transform: uppercase; }
         .cert-value { font-family: var(--mono); font-size: .75rem; color: var(--white); font-weight: 500; }
 
         .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s ease,transform .65s ease; }
         .reveal.visible { opacity:1; transform:translateY(0); }
+        .reveal-d1 { transition-delay:.1s; } 
+        .reveal-d2 { transition-delay:.2s; } 
+        .reveal-d3 { transition-delay:.3s; }
 
         .footer { background:var(--bg); padding:48px 60px; }
         .footer-divider { height:1px; background:linear-gradient(to right,transparent,var(--border),transparent); margin-bottom:48px; }
@@ -119,8 +159,11 @@
             .nav-links, .nav-cta, .nav-link-external { display:none; }
             .nav-hamburger { display:flex; }
             .page-hero, .section { padding:60px 20px; }
-            .portfolio-card { width: 300px; }
-            .portfolio-img { height: 180px; }
+            
+            /* Responsive Grid Mobile */
+            .portfolio-grid { grid-template-columns: 1fr; gap: 24px; }
+            .portfolio-img { height: 190px; }
+            
             .footer { padding:40px 20px; }
             .footer-inner { flex-direction:column; align-items:flex-start; gap:16px; }
         }
@@ -153,169 +196,82 @@
     </section>
 
     <section class="section">
-        <div class="carousel-container">
-            <div class="carousel-track">
-                
-                <!-- ============================ -->
-                <!-- SET PERTAMA (5 KARTU ASLI) -->
-                <!-- ============================ -->
-
-                <!-- 1. SureLeverage Prop Firm -->
-                <div class="portfolio-card">
-                        <div class="portfolio-img"><img src="images/sureleverage.jpeg" alt="Prop Firm Evaluation"></div>
-                    <div class="portfolio-info">
-                        <h3>Funded Trader Evaluation</h3>
-                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm SureLeverageFunding.</p>
-                        <!-- Disclaimer KYC -->
-                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-                        </p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">SureLeverage</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
-                        </div>
+        <div class="portfolio-grid">
+            
+            <!-- 1. SureLeverage Prop Firm -->
+            <div class="portfolio-card reveal">
+                <div class="portfolio-img"><img src="images/sureleverage.jpeg" alt="Prop Firm Evaluation"></div>
+                <div class="portfolio-info">
+                    <h3>Funded Trader Evaluation</h3>
+                    <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm SureLeverageFunding.</p>
+                    <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                        *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                    </p>
+                    <div class="cert-meta">
+                        <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">SureLeverage</span></div>
+                        <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
                     </div>
                 </div>
-
-                <!-- 2. Dicoding FinLit -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/dicoding-finlit.jpeg" alt="Dicoding Financial Literacy"></div>
-                    <div class="portfolio-info">
-                        <h3 style="color:var(--blue)">Intro to Financial Literacy</h3>
-                        <p>Pemahaman komprehensif investasi, mitigasi risiko aset, dan pengelolaan ekuitas.</p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Dicoding Indonesia</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Kredensial</span><span class="cert-value">KEXL20R80ZG2</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Dicoding Dasar AI -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/dicoding-ai.jpg" alt="Dicoding Belajar Dasar AI"></div>
-                    <div class="portfolio-info">
-                        <h3 style="color:var(--yellow)">Belajar Dasar AI</h3>
-                        <p>Penguasaan fundamental AI, pengolahan data terstruktur, dan logika sistem algoritmik.</p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Dicoding Indonesia</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Kredensial</span><span class="cert-value">07Z6J2MEJXQR</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Atlasfunded Prop Firm -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/atlasfunded.jpeg" alt="Prop Firm Evaluation"></div>
-                    <div class="portfolio-info">
-                        <h3>Funded Trader Evaluation</h3>
-                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AtlasFunded.</p>
-                        <!-- Disclaimer KYC -->
-                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-                        </p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Atlasfunded</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5. AquaFunded Prop Firm -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/aquafunded.jpeg" alt="Prop Firm Evaluation"></div>
-                    <div class="portfolio-info">
-                        <h3>Funded Trader Evaluation</h3>
-                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AquaFunded.</p>
-                        <!-- Disclaimer KYC -->
-                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-                        </p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">AquaFunded</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ============================================== -->
-                <!-- SET KEDUA (DUPLIKASI UNTUK LOOP MARQUEE MULUS) -->
-                <!-- ============================================== -->
-
-                <!-- 1. SureLeverage Prop Firm (DUPLIKAT) -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/sureleverage.jpeg" alt="Prop Firm Evaluation"></div>
-                    <div class="portfolio-info">
-                        <h3>Funded Trader Evaluation</h3>
-                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm SureLeverageFunding.</p>
-                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-                        </p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">SureLeverage</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. Dicoding FinLit (DUPLIKAT) -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/dicoding-finlit.jpeg" alt="Dicoding Financial Literacy"></div>
-                    <div class="portfolio-info">
-                        <h3 style="color:var(--blue)">Intro to Financial Literacy</h3>
-                        <p>Pemahaman komprehensif investasi, mitigasi risiko aset, dan pengelolaan ekuitas.</p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Dicoding Indonesia</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Kredensial</span><span class="cert-value">KEXL20R80ZG2</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Dicoding Dasar AI (DUPLIKAT) -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/dicoding-ai.jpg" alt="Dicoding Belajar Dasar AI"></div>
-                    <div class="portfolio-info">
-                        <h3 style="color:var(--yellow)">Belajar Dasar AI</h3>
-                        <p>Penguasaan fundamental AI, pengolahan data terstruktur, dan logika sistem algoritmik.</p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Dicoding Indonesia</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Kredensial</span><span class="cert-value">07Z6J2MEJXQR</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Atlasfunded Prop Firm (DUPLIKAT) -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/atlasfunded.jpeg" alt="Prop Firm Evaluation"></div>
-                    <div class="portfolio-info">
-                        <h3>Funded Trader Evaluation</h3>
-                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AtlasFunded.</p>
-                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-                        </p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Atlasfunded</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5. AquaFunded Prop Firm (DUPLIKAT) -->
-                <div class="portfolio-card">
-                    <div class="portfolio-img"><img src="images/aquafunded.jpeg" alt="Prop Firm Evaluation"></div>
-                    <div class="portfolio-info">
-                        <h3>Funded Trader Evaluation</h3>
-                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AquaFunded.</p>
-                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-                        </p>
-                        <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">AquaFunded</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- 2. Dicoding FinLit -->
+            <div class="portfolio-card reveal reveal-d1">
+                <div class="portfolio-img"><img src="images/dicoding-finlit.jpeg" alt="Dicoding Financial Literacy"></div>
+                <div class="portfolio-info">
+                    <h3 style="color:var(--blue)">Intro to Financial Literacy</h3>
+                    <p>Pemahaman komprehensif investasi, mitigasi risiko aset, dan pengelolaan ekuitas.</p>
+                    <div class="cert-meta">
+                        <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Dicoding Indonesia</span></div>
+                        <div class="cert-meta-row"><span class="cert-label">Kredensial</span><span class="cert-value">KEXL20R80ZG2</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Dicoding Dasar AI -->
+            <div class="portfolio-card reveal reveal-d2">
+                <div class="portfolio-img"><img src="images/dicoding-ai.png" alt="Dicoding Belajar Dasar AI"></div>
+                <div class="portfolio-info">
+                    <h3 style="color:var(--yellow)">Belajar Dasar AI</h3>
+                    <p>Penguasaan fundamental AI, pengolahan data terstruktur, dan logika sistem algoritmik.</p>
+                    <div class="cert-meta">
+                        <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Dicoding Indonesia</span></div>
+                        <div class="cert-meta-row"><span class="cert-label">Kredensial</span><span class="cert-value">07Z6J2MEJXQR</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Atlasfunded Prop Firm -->
+            <div class="portfolio-card reveal">
+                <div class="portfolio-img"><img src="images/atlasfunded.jpeg" alt="Prop Firm Evaluation"></div>
+                <div class="portfolio-info">
+                    <h3>Funded Trader Evaluation</h3>
+                    <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AtlasFunded.</p>
+                    <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                        *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                    </p>
+                    <div class="cert-meta">
+                        <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Atlasfunded</span></div>
+                        <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. AquaFunded Prop Firm -->
+            <div class="portfolio-card reveal reveal-d1">
+                <div class="portfolio-img"><img src="images/aquafunded.jpeg" alt="Prop Firm Evaluation"></div>
+                <div class="portfolio-info">
+                    <h3>Funded Trader Evaluation</h3>
+                    <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AquaFunded.</p>
+                    <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                        *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                    </p>
+                    <div class="cert-meta">
+                        <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">AquaFunded</span></div>
+                        <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
