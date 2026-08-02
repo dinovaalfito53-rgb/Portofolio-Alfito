@@ -23,6 +23,7 @@
             --text-dim:  #8B949E;
             --text-faint:#484F58;
             --white:     #F0F6FC;
+            --yellow:    #F0B429;
             --mono: 'JetBrains Mono', monospace;
             --sans: 'DM Sans', sans-serif;
             --radius: 4px;
@@ -76,7 +77,7 @@
         }
         .carousel-track {
             display: flex; gap: 30px; width: max-content;
-            animation: marqueeScroll 30s linear infinite;
+            animation: marqueeScroll 35s linear infinite;
         }
         @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .carousel-container:hover .carousel-track { animation-play-state: paused; }
@@ -154,18 +155,20 @@
         <div class="carousel-container">
             <div class="carousel-track">
                 
-                <!-- 1. Prop Firm Certificate -->
+                <!-- ============================ -->
+                <!-- SET PERTAMA (5 KARTU ASLI) -->
+                <!-- ============================ -->
+
+                <!-- 1. SureLeverage Prop Firm -->
                 <div class="portfolio-card reveal">
                     <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/00FF41?text=Prop+Firm+Verification" alt="Prop Firm Evaluation"></div>
                     <div class="portfolio-info">
                         <h3>Funded Trader Evaluation</h3>
                         <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm SureLeverageFunding.</p>
-
-                        <!-- Tambahkan disclaimer ini -->
-    <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-        *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-    </p>
-                        
+                        <!-- Disclaimer KYC -->
+                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                        </p>
                         <div class="cert-meta">
                             <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">SureLeverage</span></div>
                             <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
@@ -199,18 +202,16 @@
                     </div>
                 </div>
 
-                <!-- 4. Prop Firm Certificate -->
+                <!-- 4. Atlasfunded Prop Firm -->
                 <div class="portfolio-card reveal">
                     <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/00FF41?text=Prop+Firm+Verification" alt="Prop Firm Evaluation"></div>
                     <div class="portfolio-info">
                         <h3>Funded Trader Evaluation</h3>
                         <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AtlasFunded.</p>
-
-                        <!-- Tambahkan disclaimer ini -->
-    <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-        *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-    </p>
-                        
+                        <!-- Disclaimer KYC -->
+                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                        </p>
                         <div class="cert-meta">
                             <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Atlasfunded</span></div>
                             <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
@@ -218,18 +219,16 @@
                     </div>
                 </div>
 
-                <!-- 5. Prop Firm Certificate -->
+                <!-- 5. AquaFunded Prop Firm -->
                 <div class="portfolio-card reveal">
                     <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/00FF41?text=Prop+Firm+Verification" alt="Prop Firm Evaluation"></div>
                     <div class="portfolio-info">
                         <h3>Funded Trader Evaluation</h3>
                         <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AquaFunded.</p>
-
-                        <!-- Tambahkan disclaimer ini -->
-    <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
-        *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
-    </p>
-                        
+                        <!-- Disclaimer KYC -->
+                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                        </p>
                         <div class="cert-meta">
                             <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">AquaFunded</span></div>
                             <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
@@ -237,12 +236,19 @@
                     </div>
                 </div>
 
-                <!-- DUPLIKASI UNTUK LOOP MARQUEE -->
+                <!-- ============================================== -->
+                <!-- SET KEDUA (DUPLIKASI UNTUK LOOP MARQUEE MULUS) -->
+                <!-- ============================================== -->
+
+                <!-- 1. SureLeverage Prop Firm (DUPLIKAT) -->
                 <div class="portfolio-card reveal">
                     <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/00FF41?text=Prop+Firm+Verification" alt="Prop Firm Evaluation"></div>
                     <div class="portfolio-info">
                         <h3>Funded Trader Evaluation</h3>
-                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm terkemuka dunia.</p>
+                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm SureLeverageFunding.</p>
+                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                        </p>
                         <div class="cert-meta">
                             <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">SureLeverage</span></div>
                             <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
@@ -250,6 +256,7 @@
                     </div>
                 </div>
 
+                <!-- 2. Dicoding FinLit (DUPLIKAT) -->
                 <div class="portfolio-card reveal">
                     <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/58A6FF?text=Financial+Literacy" alt="Dicoding Financial Literacy"></div>
                     <div class="portfolio-info">
@@ -262,6 +269,7 @@
                     </div>
                 </div>
 
+                <!-- 3. Dicoding Dasar AI (DUPLIKAT) -->
                 <div class="portfolio-card reveal">
                     <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/F0B429?text=Artificial+Intelligence" alt="Dicoding Belajar Dasar AI"></div>
                     <div class="portfolio-info">
@@ -274,17 +282,38 @@
                     </div>
                 </div>
 
+                <!-- 4. Atlasfunded Prop Firm (DUPLIKAT) -->
                 <div class="portfolio-card reveal">
-                    <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/00CC33?text=System+Optimization" alt="System Optimization Log"></div>
+                    <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/00FF41?text=Prop+Firm+Verification" alt="Prop Firm Evaluation"></div>
                     <div class="portfolio-info">
-                        <h3 style="color:var(--green-dim)">Funded Trader Evaluation</h3>
-                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm.</p>
+                        <h3>Funded Trader Evaluation</h3>
+                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AtlasFunded.</p>
+                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                        </p>
                         <div class="cert-meta">
-                            <div class="cert-meta-row"><span class="cert-label">Proyek</span><span class="cert-value">FundedTrader</span></div>
-                            <div class="cert-meta-row"><span class="cert-label">Status</span><span class="cert-value">Active ■</span></div>
+                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">Atlasfunded</span></div>
+                            <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
                         </div>
                     </div>
                 </div>
+
+                <!-- 5. AquaFunded Prop Firm (DUPLIKAT) -->
+                <div class="portfolio-card reveal">
+                    <div class="portfolio-img"><img src="https://placehold.co/800x440/161B22/00FF41?text=Prop+Firm+Verification" alt="Prop Firm Evaluation"></div>
+                    <div class="portfolio-info">
+                        <h3>Funded Trader Evaluation</h3>
+                        <p>Berhasil meloloskan fase evaluasi ketat pada platform prop firm AquaFunded.</p>
+                        <p style="font-size: 0.7rem; color: var(--yellow); margin-top: 8px; font-style: italic;">
+                            *Catatan KYC: Registrasi akun menggunakan data wali (orang tua) karena regulasi batas usia, akun dikelola 100% mandiri.
+                        </p>
+                        <div class="cert-meta">
+                            <div class="cert-meta-row"><span class="cert-label">Penerbit</span><span class="cert-value">AquaFunded</span></div>
+                            <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
