@@ -85,7 +85,6 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            text-decoration: none; /* Agar gaya tautan bawaan hilang */
             color: inherit;
             cursor: pointer;
             transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
@@ -105,6 +104,26 @@
             overflow: hidden; 
             height: 210px; 
             border-bottom: 1px solid var(--border); 
+            position: relative;
+        }
+
+        .portfolio-img::after {
+            content: '🔍 Klik untuk Pratinjau';
+            position: absolute;
+            inset: 0;
+            background: rgba(13, 17, 23, 0.7);
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .portfolio-card:hover .portfolio-img::after {
+            opacity: 1;
         }
         
         .portfolio-img img { 
@@ -135,11 +154,107 @@
             gap: 6px; 
             padding-top: 12px; 
             border-top: 1px dashed var(--border2); 
-            margin-top: auto; /* Memastikan posisi selalu di bawah kartu */
+            margin-top: auto;
         }
         .cert-meta-row { display: flex; justify-content: space-between; align-items: center; }
         .cert-label { font-family: var(--mono); font-size: .65rem; color: var(--text-faint); text-transform: uppercase; }
         .cert-value { font-family: var(--mono); font-size: .75rem; color: var(--white); font-weight: 500; }
+
+        /* STYLES MODAL PRATINJAU */
+        .cert-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(13, 17, 23, 0.88);
+            backdrop-filter: blur(16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .cert-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.8), 0 0 32px var(--green-glow);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .cert-modal.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface2);
+        }
+
+        .modal-title {
+            font-family: var(--mono);
+            font-size: 0.95rem;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 4px;
+            transition: color var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--green);
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .modal-body img {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 6px;
+            border: 1px solid var(--border2);
+        }
+
+        .modal-caption {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-align: center;
+        }
 
         .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s ease,transform .65s ease; }
         .reveal.visible { opacity:1; transform:translateY(0); }
@@ -163,7 +278,6 @@
             .nav-hamburger { display:flex; }
             .page-hero, .section { padding:60px 20px; }
             
-            /* Responsive Grid Mobile */
             .portfolio-grid { grid-template-columns: 1fr; gap: 24px; }
             .portfolio-img { height: 190px; }
             
@@ -202,7 +316,7 @@
         <div class="portfolio-grid">
             
             <!-- 1. SureLeverage Prop Firm -->
-            <a href="#" class="portfolio-card reveal">
+            <div class="portfolio-card reveal" data-title="Funded Trader Evaluation - SureLeverage">
                 <div class="portfolio-img"><img src="images/sureleverage.jpeg" alt="Prop Firm Evaluation"></div>
                 <div class="portfolio-info">
                     <h3>Funded Trader Evaluation</h3>
@@ -215,10 +329,10 @@
                         <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 2. Dicoding FinLit -->
-            <a href="#" class="portfolio-card reveal reveal-d1">
+            <div class="portfolio-card reveal reveal-d1" data-title="Intro to Financial Literacy - Dicoding Indonesia">
                 <div class="portfolio-img"><img src="images/dicoding-finlit.jpeg" alt="Dicoding Financial Literacy"></div>
                 <div class="portfolio-info">
                     <h3 style="color:var(--blue)">Intro to Financial Literacy</h3>
@@ -228,10 +342,10 @@
                         <div class="cert-meta-row"><span class="cert-label">Kredensial</span><span class="cert-value">KEXL20R80ZG2</span></div>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 3. Atlasfunded Prop Firm -->
-            <a href="#" class="portfolio-card reveal">
+            <div class="portfolio-card reveal" data-title="Funded Trader Evaluation - Atlasfunded">
                 <div class="portfolio-img"><img src="images/atlasfunded.jpeg" alt="Prop Firm Evaluation"></div>
                 <div class="portfolio-info">
                     <h3>Funded Trader Evaluation</h3>
@@ -244,10 +358,10 @@
                         <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 4. AquaFunded Prop Firm -->
-            <a href="#" class="portfolio-card reveal reveal-d1">
+            <div class="portfolio-card reveal reveal-d1" data-title="Funded Trader Evaluation - AquaFunded">
                 <div class="portfolio-img"><img src="images/aquafunded.jpeg" alt="Prop Firm Evaluation"></div>
                 <div class="portfolio-info">
                     <h3>Funded Trader Evaluation</h3>
@@ -260,10 +374,10 @@
                         <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 5. FundingPips Prop Firm -->
-            <a href="#" class="portfolio-card reveal reveal-d1">
+            <div class="portfolio-card reveal reveal-d1" data-title="Passed Phase 1 Evaluation - FundingPips">
                 <div class="portfolio-img"><img src="images/fundingpips.jpeg" alt="Prop Firm Evaluation"></div>
                 <div class="portfolio-info">
                     <h3>Passed Phase 1 Evaluation</h3>
@@ -273,10 +387,10 @@
                         <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 6. Fundedhero Prop Firm -->
-            <a href="#" class="portfolio-card reveal reveal-d1">
+            <div class="portfolio-card reveal reveal-d1" data-title="Passed Phase 1 Evaluation - Fundedhero">
                 <div class="portfolio-img"><img src="images/fundedhero_phase1.jpg" alt="Prop Firm Evaluation"></div>
                 <div class="portfolio-info">
                     <h3>Passed Phase 1 Evaluation</h3>
@@ -289,7 +403,7 @@
                         <div class="cert-meta-row"><span class="cert-label">Tahun</span><span class="cert-value">2025 - 2026</span></div>
                     </div>
                 </div>
-            </a>
+            </div>
 
         </div>
     </section>
@@ -308,6 +422,20 @@
             </ul>
         </div>
     </footer>
+</div>
+
+<!-- MODAL CONTAINER -->
+<div class="cert-modal" id="certModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="modal-title" id="modalTitle">Pratinjau Sertifikat</div>
+            <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body">
+            <img src="" alt="Pratinjau Sertifikat Besar" id="modalImg">
+            <div class="modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -353,6 +481,42 @@
                 navLinks.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:rgba(13,17,23,.97);border-bottom:1px solid var(--border);padding:16px 24px;gap:4px;z-index:799;';
             });
         }
+
+        // LOGIK MODAL POP-UP
+        const modal = document.getElementById('certModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalCaption = document.getElementById('modalCaption');
+        const modalClose = document.getElementById('modalClose');
+
+        document.querySelectorAll('.portfolio-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const img = card.querySelector('.portfolio-img img');
+                const title = card.getAttribute('data-title') || card.querySelector('h3').innerText;
+                const desc = card.querySelector('p').innerText;
+
+                if (img) {
+                    modalImg.src = img.src;
+                    modalTitle.innerText = title;
+                    modalCaption.innerText = desc;
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Kunci scroll halaman
+                }
+            });
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Balikkan scroll
+        };
+
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
     });
 </script>
 </body>
